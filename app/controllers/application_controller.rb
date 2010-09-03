@@ -15,8 +15,14 @@ class ApplicationController < ActionController::Base
   protected
 
     def authorize
-      unless User.find_by_id(session[:user_id])
-        redirect_to login_url, :notice => "Please log in"
+      if User.count == 0
+        if !(request.path_parameters[:controller] == 'users' and (request.path_parameters[:action] == 'new' or request.path_parameters[:action] == 'create'))
+          redirect_to :controller => 'users', :action => 'new'
+        end
+      else
+        unless User.find_by_id(session[:user_id]) 
+          redirect_to login_url, :notice => "Please log in"
+        end
       end
     end
 end
