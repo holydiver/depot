@@ -12,11 +12,20 @@ class ApplicationController < ActionController::Base
       cart
     end
 
+    def request_is_for_creating_user
+      params = request.path_parameters
+      if params[:controller] == 'users'
+        params[:action] == 'new' or params[:action] == 'create'
+      else
+        false      
+      end
+    end
+
   protected
 
     def authorize
       if User.count == 0
-        if !(request.path_parameters[:controller] == 'users' and (request.path_parameters[:action] == 'new' or request.path_parameters[:action] == 'create'))
+        if !request_is_for_creating_user
           redirect_to :controller => 'users', :action => 'new'
         end
       else
