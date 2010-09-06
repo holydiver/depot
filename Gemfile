@@ -29,3 +29,6 @@ gem 'will_paginate', '>= 3.0.pre'
 # group :development, :test do
 #   gem 'webrat'
 # end
+group :production do
+  gem 'mysql'
+end
