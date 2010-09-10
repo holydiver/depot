@@ -3,7 +3,9 @@
 <% end %>
 
 <h1>Your Pragmatic Catalog</h1>
-
+<% if @counter > 5 %>
+<p id="count"><%="You have reviewed the catalog #{@counter} times"%></p>
+<% end %>
 <%= @products.each do |product| %>
   <div class="entry">
     <%= link_to image_tag(product.image_url), line_items_path(:product_id => product), :method => :post, :remote => true %>
